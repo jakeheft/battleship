@@ -14,4 +14,11 @@ class CellTest < Minitest::Test
 
     assert_equal "B4", cell.coordinate
   end
+
+  def test_it_is_empty_to_start
+    cell = Cell.new("B4")
+
+    assert_nil cell.ship
+    assert cell.empty?
+  end
 end

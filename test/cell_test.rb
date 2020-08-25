@@ -53,13 +53,26 @@ class CellTest < Minitest::Test
   end
 
   def test_cell_can_run_true_render
-    cell_1 = Cell.new("B4")
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
 
     cell_2.place_ship(cruiser)
     assert_equal ".", cell_2.render
     assert_equal "S", cell_2.render(true)
+  end
+
+  def test_a_ship_will_show_sunk_with_render
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+
+    cell_2.place_ship(cruiser)
+    cell_2.fire_upon
+    assert_equal "H", cell_2.render
+    assert_equal false, cruiser.sunk?
+    cruiser.hit
+    cruiser.hit
+    assert cruiser.sunk?
+    assert_equal "X", cell_2.render
   end
 
 end

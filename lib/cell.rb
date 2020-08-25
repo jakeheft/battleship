@@ -27,12 +27,24 @@ class Cell
     end
   end
 
-  def render(reveal = false)
-    if reveal == false
+  def render(reveal = false) ## THIS CAN DEFINITELY BE REFACTORED WITH A LESS FOGGY BRAIN
+    if reveal == true
+      if @ship.sunk?
+        "X"
+      elsif @ship != nil && @fired_status == false
+        "S"
+      elsif @ship != nil && @fired_status == true
+        "H"
+      end
+    elsif reveal == false
       if @fired_status == false
         "."
       elsif @fired_status == true && @ship == nil
         "M"
+      elsif @ship.sunk? == true
+        "X"
+      elsif @fired_status == true && @ship != nil
+        "H"
       end
     elsif reveal == true
       if @ship.sunk?

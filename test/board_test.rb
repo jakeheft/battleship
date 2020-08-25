@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
+require './lib/board'
 
 class BoardTest < MiniTest::Test
 
@@ -15,11 +16,43 @@ class BoardTest < MiniTest::Test
     board = Board.new
     board.cells
 
-    # test a hash with 
+    # test a hash with 16 key/value pairs is created
+    # test those keys point to cell objects
   end
 
-  def method_name
+  def test_if_coordinate_is_on_board_or_not
+    board = Board.new
 
+    # ex: board.valid_coordinate?("A1") => true
+    # ex: board.valid_coordinate?("A5") => false
+  end
+
+  def test_if_placement_of_ship_is_valid_or_not
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    # method valid_placement? takes two arguments: a Ship object and an array of Coordinates.
+  end
+
+  def test_number_of_coordinate_in_array_equals_length_of_ship
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    # ex: board.valid_placement?(cruiser, ["A1", "A2"]) => false
+    # ex: board.valid_placement?(submarine, ["A2", "A3", "A4"]) => false
+  end
+
+  def test_coordinates_are_consecutive
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    # ex: board.valid_placement?(cruiser, ["A1", "A2", "A4"]) => false
+    # ex: board.valid_placement?(submarine, ["A1", "C1"]) => false
+    # ex: board.valid_placement?(cruiser, ["A3", "A2", "A1"]) => false
+    # ex: board.valid_placement?(submarine, ["C1", "B1"]) => false
   end
 
 end

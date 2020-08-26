@@ -16,14 +16,11 @@ class BoardTest < MiniTest::Test
     board = Board.new
     board.cells
 
-    # test a hash with 16 key/value pairs is created
-    # test those keys point to cell objects
     assert_equal 16, board.cells.count
     assert_instance_of Cell, board.cells["A1"]
   end
 
   def test_if_coordinate_is_on_board_or_not
-    skip
     board = Board.new
 
     assert board.validate_coordinate?("A1")

@@ -21,6 +21,11 @@ class Board
     }
   end
 
+  def validate_coordinate?(cell)
+    # require "pry"; binding.pry
+    @cells.keys.include?(cell)
+  end
+
 
 
 end

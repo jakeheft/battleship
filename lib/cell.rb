@@ -28,14 +28,17 @@ class Cell
   end
 
   def render(reveal = false)
-    if reveal == true
+    if reveal == true && !empty? && !fired_upon?
+      "S"
+      
       # if @ship.sunk?
       #   "X"
-      if @ship != nil && @fired_status == false
-        "S"
+      # if @ship != nil && @fired_status == false
+      # if !empty? && !fired_upon?
+        # "S"
       # elsif @ship != nil && @fired_status == true
         # "H"
-      end
+      # end
     elsif reveal == false
       if @fired_status == false
         "."

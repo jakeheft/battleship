@@ -94,6 +94,7 @@ class BoardTest < MiniTest::Test
     cell_2.ship
     cell_3.ship
     assert cell_3.ship == cell_2.ship
+    assert_equal cruiser, cell_1.ship
   end
 
   def test_ships_cant_overlap

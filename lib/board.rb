@@ -48,9 +48,14 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-
-    (coordinates.length == ship.length) && consecutive_coordinates?(coordinates) &&
+    coordinates.length == ship.length && consecutive_coordinates?(coordinates) &&
      validate_coordinates?(coordinates)
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      cells[coordinate].place_ship(ship)
+    end
   end
 
 end

@@ -81,7 +81,6 @@ class BoardTest < MiniTest::Test
   end
 
   def test_a_ship_contains_multiple_cells
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 

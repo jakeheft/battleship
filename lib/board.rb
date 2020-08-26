@@ -25,15 +25,19 @@ class Board
     @cells.keys.include?(cell)
   end
 
+  def validate_coordinates?(coordinates)
+    coordinates.each.all? do |coordinate|
+      validate_coordinate?(coordinate)
+    end
+  end
+
   def consecutive_coordinates?(coordinates)
     letters = []
     numbers = []
     coordinates.each do |coordinate|
-      # ord_letter = coordinate[0].ord
       letters << coordinate[0].ord
       numbers << coordinate[1].to_i
     end
-    # require "pry"; binding.pry
     if letters.each_cons(2).all? { |x,y| x == y} && numbers.each_cons(2).all? { |x,y| x == y - 1 }
       true
     elsif numbers.sort.each_cons(2).all? { |x,y| x == y} && letters.sort.each_cons(2).all? { |x,y| x == y - 1 }
@@ -44,7 +48,9 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    coordinates.length == ship.length && consecutive_coordinates?(coordinates)
+
+    (coordinates.length == ship.length) && consecutive_coordinates?(coordinates) &&
+     validate_coordinates?(coordinates)
   end
 
 end

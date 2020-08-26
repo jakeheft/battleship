@@ -28,27 +28,16 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.validate_coordinate?("A5")
     assert_equal false, board.validate_coordinate?("E1")
     assert_equal false, board.validate_coordinate?("A22")
-    # ex: board.valid_coordinate?("A1") => true
-    # ex: board.valid_coordinate?("A5") => false
-  end
-
-  def test_if_placement_of_ship_is_valid_or_not
-    skip
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-
-    # method valid_placement? takes two arguments: a Ship object and an array of Coordinates.
   end
 
   def test_number_of_coordinate_in_array_equals_length_of_ship
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
     assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
     assert_equal false,  board.valid_placement?(submarine, ["A2", "A3", "A4"])
+    assert board.valid_placement?(cruiser, ["B1", "C1", "D1"])
   end
 
   def test_coordinates_are_consecutive

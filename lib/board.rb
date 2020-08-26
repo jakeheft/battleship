@@ -22,10 +22,11 @@ class Board
   end
 
   def validate_coordinate?(cell)
-    # require "pry"; binding.pry
     @cells.keys.include?(cell)
   end
 
-
+  def valid_placement?(ship, coordinates)
+    coordinates.length == ship.length
+  end
 
 end

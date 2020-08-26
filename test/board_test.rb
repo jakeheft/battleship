@@ -18,9 +18,12 @@ class BoardTest < MiniTest::Test
 
     # test a hash with 16 key/value pairs is created
     # test those keys point to cell objects
+    assert_equal 16, board.cells.count
+    assert_instance_of Cell, board.cells["A1"]
   end
 
   def test_if_coordinate_is_on_board_or_not
+    skip
     board = Board.new
 
     assert board.validate_coordinate?("A1")
@@ -33,6 +36,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_if_placement_of_ship_is_valid_or_not
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -41,6 +45,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_number_of_coordinate_in_array_equals_length_of_ship
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -50,6 +55,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinates_are_consecutive
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -61,6 +67,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_coordinates_cant_be_diagonal
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -70,6 +77,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_placements_can_be_valid
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -79,6 +87,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_a_ship_contains_multiple_cells
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 
@@ -95,6 +104,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_ships_cant_overlap
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 
@@ -106,6 +116,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_true_render_will_map_ships
+    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 

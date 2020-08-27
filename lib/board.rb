@@ -47,9 +47,15 @@ class Board
    end
   end
 
+  def coordinates_empty?(coordinates)
+    coordinates.select.all? do |coordinate|
+      cells[coordinate].empty?
+    end
+  end
+
   def valid_placement?(ship, coordinates)
     coordinates.length == ship.length && consecutive_coordinates?(coordinates) &&
-     validate_coordinates?(coordinates)
+     validate_coordinates?(coordinates) && coordinates_empty?(coordinates)
   end
 
   def place(ship, coordinates)

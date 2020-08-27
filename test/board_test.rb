@@ -98,7 +98,6 @@ class BoardTest < MiniTest::Test
   end
 
   def test_ships_cant_overlap
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 

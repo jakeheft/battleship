@@ -109,12 +109,11 @@ class BoardTest < MiniTest::Test
   end
 
   def test_true_render_will_map_ships
-    skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 
-    expected1 = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
-    expected2 = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+    expected1 = " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    expected2 = " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
 
     board.place(cruiser, ["A1", "A2", "A3"])
     assert_equal expected1, board.render

@@ -64,4 +64,17 @@ class Board
     end
   end
 
+  def render(reveal = false)
+    if reveal == false
+      cra = cells.map do |key, value|
+        value.render
+      end
+    elsif reveal == true
+      cra = cells.map do |key, value|
+        value.render(true)
+      end
+    end
+    " 1 2 3 4 ""\nA #{cra[0]} #{cra[1]} #{cra[2]} #{cra[3]} \nB #{cra[4]} #{cra[5]} #{cra[6]} #{cra[7]} \nC #{cra[8]} #{cra[9]} #{cra[10]} #{cra[11]} \nD #{cra[12]} #{cra[13]} #{cra[14]} #{cra[15]} \n"
+  end
+
 end

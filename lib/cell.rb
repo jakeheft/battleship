@@ -28,27 +28,44 @@ class Cell
   end
 
   def render(reveal = false)
-    if reveal == true && !empty? && !fired_upon?
-      "S"
-      
-      # if @ship.sunk?
-      #   "X"
-      # if @ship != nil && @fired_status == false
-      # if !empty? && !fired_upon?
-        # "S"
-      # elsif @ship != nil && @fired_status == true
-        # "H"
-      # end
+    if reveal == true
+      if !empty? && !fired_upon?
+        "S"
+      elsif !empty? && fired_upon?
+        "H"
+      elsif empty? && fired_upon?
+        "M"
+      elsif empty? && !fired_upon?
+        "."
+      elsif @ship.sunk?
+        "X"
+      end
     elsif reveal == false
       if @fired_status == false
         "."
       elsif @fired_status == true && @ship == nil
         "M"
-      elsif @ship.sunk? == true
-        "X"
       elsif @fired_status == true && @ship != nil
         "H"
+      elsif @ship.sunk?
+        "X"
       end
     end
   end
+
+  # def render(reveal = false)
+  #   if reveal == true && !empty? && !fired_upon?
+  #     "S"
+  #   elsif reveal == false
+  #     if @fired_status == false
+  #       "."
+  #     elsif @fired_status == true && @ship == nil
+  #       "M"
+  #     elsif @ship.sunk? == true
+  #       "X"
+  #     elsif @fired_status == true && @ship != nil
+  #       "H"
+  #     end
+  #   end
+  # end
 end

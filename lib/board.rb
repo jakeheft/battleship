@@ -25,15 +25,19 @@ class Board
     @cells.keys.include?(cell)
   end
 
+  def validate_coordinates?(coordinates)
+    coordinates.each.all? do |coordinate|
+      validate_coordinate?(coordinate)
+    end
+  end
+
   def consecutive_coordinates?(coordinates)
     letters = []
     numbers = []
     coordinates.each do |coordinate|
-      # ord_letter = coordinate[0].ord
       letters << coordinate[0].ord
       numbers << coordinate[1].to_i
     end
-    # require "pry"; binding.pry
     if letters.each_cons(2).all? { |x,y| x == y} && numbers.each_cons(2).all? { |x,y| x == y - 1 }
       true
     elsif numbers.sort.each_cons(2).all? { |x,y| x == y} && letters.sort.each_cons(2).all? { |x,y| x == y - 1 }
@@ -43,8 +47,34 @@ class Board
    end
   end
 
+  def coordinates_empty?(coordinates)
+    coordinates.select.all? do |coordinate|
+      cells[coordinate].empty?
+    end
+  end
+
   def valid_placement?(ship, coordinates)
-    coordinates.length == ship.length && consecutive_coordinates?(coordinates)
+    coordinates.length == ship.length && consecutive_coordinates?(coordinates) &&
+     validate_coordinates?(coordinates) && coordinates_empty?(coordinates)
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def render(reveal = false)
+    if reveal == false
+      cra = cells.map do |key, value|
+        value.render
+      end
+    elsif reveal == true
+      cra = cells.map do |key, value|
+        value.render(true)
+      end
+    end
+    " 1 2 3 4 ""\nA #{cra[0]} #{cra[1]} #{cra[2]} #{cra[3]} \nB #{cra[4]} #{cra[5]} #{cra[6]} #{cra[7]} \nC #{cra[8]} #{cra[9]} #{cra[10]} #{cra[11]} \nD #{cra[12]} #{cra[13]} #{cra[14]} #{cra[15]} \n"
   end
 
 end

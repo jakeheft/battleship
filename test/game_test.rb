@@ -24,4 +24,13 @@ class GameTest < MiniTest::Test
     assert_equal false, game.board.coordinates_empty?(["A1", "A2", "A3"])
     assert_equal game.cruiser, game.board.cells["A1"].ship
   end
+
+    def test_player_can_fire_on_cell
+      player = Player.new("Timmy")
+      cruiser = Ship.new("Cruiser", 3)
+      board = Board.new
+
+      player.fire_upon("A1")
+      assert_equal "M", board.cells["A1"].render
+    end
 end

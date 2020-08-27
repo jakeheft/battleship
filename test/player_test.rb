@@ -18,16 +18,19 @@ class PlayerTest < Minitest::Test
     assert_equal "Timmy", player.name
   end
 
-  def test_player_can_place_ships
+  def test_player_can_be_asked_for_ship_placement
+    skip
     player = Player.new("Timmy")
-    cruiser = Ship.new("Cruiser", 3)
+
+    refute_nil player.query_place_ship
+    assert_equal false, player.ship_placement.empty?
+  end
+
+  def test_player_can_fire_at_cell
+    player = Player.new("Timmy")
     board = Board.new
-    
 
-    player.place_ship(cruiser, "A1 A2 A3")
-
-    assert_equal false, board.coordinates_empty?(["A1", "A2", "A3"])
-
+    assert_equal "A1", player.query_fire_upon # We entered "a1" when queried"
   end
 
 end

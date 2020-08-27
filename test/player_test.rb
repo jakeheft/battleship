@@ -12,4 +12,10 @@ class PlayerTest < Minitest::Test
     assert_instance_of Player, player
   end
 
+  def test_it_has_attributes
+    player = Player.new("Timmy")
+
+    assert_equal "Timmy", player.name
+  end
+
 end

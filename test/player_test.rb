@@ -18,4 +18,15 @@ class PlayerTest < Minitest::Test
     assert_equal "Timmy", player.name
   end
 
+  def test_player_can_place_ships
+    player = Player.new("Timmy")
+    cruiser = Ship.new("Cruiser", 3)
+    board = Board.new
+
+    player.place_ship(cruiser, "A1 A2 A3")
+
+    assert_equal false, board.coordinates_empty?(["A1", "A2", "A3"])
+
+  end
+
 end

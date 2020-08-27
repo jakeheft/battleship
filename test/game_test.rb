@@ -16,12 +16,12 @@ class GameTest < MiniTest::Test
 
   def test_player_can_place_ships
     game = Game.new
-    cruiser = Ship.new("Cruiser", 3)
-    board = Board.new
+    # cruiser = Ship.new("Cruiser", 3)
+    # board = Board.new
 
-    game.place_ship(cruiser, "A1 A2 A3")
+    game.place_ship(game.cruiser, "A1 A2 A3")
 
-    # assert_equal false, board.coordinates_empty?(["A1", "A2", "A3"])
-    assert_equal cruiser, board.cells["A1"].ship
+    assert_equal false, game.board.coordinates_empty?(["A1", "A2", "A3"])
+    assert_equal game.cruiser, game.board.cells["A1"].ship
   end
 end

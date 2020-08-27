@@ -22,6 +22,7 @@ class PlayerTest < Minitest::Test
     player = Player.new("Timmy")
     cruiser = Ship.new("Cruiser", 3)
     board = Board.new
+    
 
     player.place_ship(cruiser, "A1 A2 A3")
 

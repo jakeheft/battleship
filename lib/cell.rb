@@ -13,7 +13,6 @@ class Cell
   end
 
   def place_ship(ship)
-    # require "pry"; binding.pry
     @ship = ship
   end
 

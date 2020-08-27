@@ -13,6 +13,10 @@ class Player
     @ship_placement = answer.split(" ")
   end
 
+  def query_fire_upon
+    (answer = gets.chomp).upcase
+  end
+
 #run coordinates = gets.chomp in game start method, then coordinates are carried into player.place_ship method via argument
   # def place_ship(ship, coordinates_string) #pass in board as argument
   #   coordinates = coordinates_string.split(" ")

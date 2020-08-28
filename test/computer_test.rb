@@ -12,13 +12,12 @@ class ComputerTest < Minitest::Test
     assert_instance_of Computer, computer
   end
 
-  def test_computer_gives_ship_placement
+  def test_computer_can_create_ship_coordinates
     board = Board.new
-    computer = Computer.new(board)
+    computer = Computer.new
     cruiser = Ship.new("Cruiser", 3)
 
-    refute_nil computer.query_place_ship(cruiser.length)
-    assert_equal false, computer.ship_placement.empty?
+    assert_equal 3, computer.query_place_ship(3).length
+    assert_equal 2, computer.query_place_ship(2).length
   end
-
 end

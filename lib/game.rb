@@ -13,7 +13,7 @@ class Game
   end
 
 #run coordinates = gets.chomp in game start method, then coordinates are carried into player.place_ship method via argument
-  def place_ship(ship, coordinates_string)
+  def place_ship(ship, coordinates)
     coordinates = coordinates_string.split(" ")
 
     coordinates.each do |coordinate|

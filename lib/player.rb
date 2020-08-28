@@ -8,11 +8,13 @@ class Player
     @ship_placement = []
   end
 
+# this is string/array info only, restrictions on array size will be controlled in the game
   def query_place_ship
     answer = gets.chomp
     @ship_placement = answer.split(" ")
   end
 
+# this is string info only, restrictions on validity of string will be controlled in the game
   def query_fire_upon
     (answer = gets.chomp).upcase
   end

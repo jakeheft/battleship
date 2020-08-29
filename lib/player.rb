@@ -12,7 +12,6 @@ class Player
   def query_place_ship
     answer = gets.chomp
     @ship_placement = answer.split(" ")
-    
   end
 
 # this is string info only, restrictions on validity of string will be controlled in the game

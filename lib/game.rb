@@ -26,14 +26,19 @@ class Game
   end
 
   def player_place_ships
+    puts "Please enter 3 coordinates."
     player_cruiser = player.query_place_ship
     until player_cruiser.length == 3 && @player_board.valid_placement?(cruiser, player_cruiser)
       puts "Please select valid coordinates. Enter 3 coordinates separated by a space."
+      player_cruiser = player.query_place_ship
+      # require "pry"; binding.pry
     end
     @player_board.place(cruiser, player_cruiser)
+    puts "Please enter 2 coordinates"
     player_submarine = player.query_place_ship
-    until player_cruiser.length == 2 && @player_board.valid_placement?(cruiser, player_cruiser)
+    until player_submarine.length == 2 && @player_board.valid_placement?(submarine, player_submarine)
       puts "Please select valid coordinates. Enter 2 coordinates separated by a space that are empty."
+      player_submarine = player.query_place_ship
     end
     @player_board.place(submarine, player_submarine)
   end

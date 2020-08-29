@@ -24,8 +24,8 @@ class ComputerTest < Minitest::Test
   def test_computer_can_choose_fire_upon_coordinates
     computer = Computer.new
 
-    assert_equal 16, computer.cells.length
+    assert_equal 16, computer.firing_cells.length
     computer.query_fire_upon
-    assert_equal 15, computer.cells.length
+    assert_equal 15, computer.firing_cells.length
   end
 end

@@ -7,7 +7,7 @@ class Computer
     board = board.cells
   end
 
-  def valid_placement?(starting_cell, ship_length, randomizer)
+  def valid_placement?(starting_cell, ship_length, randomizer) # A3
     starting_letter = starting_cell[0]
     starting_num = starting_cell[1]
     if randomizer == "left/right" && (starting_num - ship_length) < 0
@@ -24,7 +24,7 @@ class Computer
   ###ords: "A"=65, "B"=66, "C"=67, "D"=68
 
   def query_place_ship(ship_length)
-    starting_cell = @cells.sample  # A1
+    starting_cell = @cells.sample
     ship_placement = []
     # randomly choose up/down or left/right. There will be (ship.length - 1) cells that need to be placed on (e.g. cruiser is 3 long, so 2 will have to be left.)
     # starting_letter = starting_cell[0]

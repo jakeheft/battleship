@@ -20,26 +20,35 @@ class Game
 #run coordinates = gets.chomp in game start method, then coordinates are carried into player.place_ship method via argument
   def computer_place_ships
     computer_cruiser = computer.query_place_ship(cruiser.length)
-    computer_submarine = computer.query_place_ship(submarine.length)
     @computer_board.place(cruiser, computer_cruiser)
+    computer_submarine = computer.query_place_ship(submarine.length)
+    until @computer_board.valid_placement?(submarine, computer_submarine)
+      computer_submarine = computer.query_place_ship(submarine.length)
+    end
     @computer_board.place(submarine, computer_submarine)
   end
 
   def player_place_ships
-    puts "Please enter 3 coordinates."
+    puts "I have laid out my ships on the grid."
+    puts "You now need to lay out your two ships."
+    puts "The Cruiser is three units long and the Submarine is two units long."
+    puts @player_board.render
+    print"Enter the squares for the Cruiser (3 spaces):\n>  "
     player_cruiser = player.query_place_ship
     until player_cruiser.length == 3 && @player_board.valid_placement?(cruiser, player_cruiser)
       puts "Please select valid coordinates. Enter 3 coordinates separated by a space."
       player_cruiser = player.query_place_ship
     end
     @player_board.place(cruiser, player_cruiser)
-    puts "Please enter 2 coordinates"
+    puts @player_board.render(true)
+    print "Enter the squares for the Cruiser (3 spaces):\n>  "
     player_submarine = player.query_place_ship
     until player_submarine.length == 2 && @player_board.valid_placement?(submarine, player_submarine)
       puts "Please select valid coordinates. Enter 2 coordinates separated by a space that are empty."
       player_submarine = player.query_place_ship
     end
     @player_board.place(submarine, player_submarine)
+    puts @player_board.render(true)
   end
 
   def start

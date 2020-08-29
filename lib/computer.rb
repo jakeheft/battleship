@@ -25,24 +25,26 @@ class Computer
     until valid_placement?(ship_length, randomizer, starting_cell)
       starting_cell = @placement_cells.sample
     end
-    @placement_cells.delete(starting_cell)
     coordinates_of_ship = [starting_cell]
     if randomizer == "vertical"
       (ship_length - 1).times do
         next_cell = (starting_cell[0].ord + 1).chr + starting_cell[1]
         coordinates_of_ship << next_cell
-        @placement_cells.delete(next_cell)
         starting_cell = next_cell
       end
     elsif randomizer == "horizontal"
       (ship_length - 1).times do
         next_cell = starting_cell[0] + (starting_cell[1].to_i + 1).to_s
         coordinates_of_ship << next_cell
-        @placement_cells.delete(next_cell)
         starting_cell = next_cell
       end
     end
-  coordinates_of_ship
+    if ship_length == 3
+      coordinates_of_ship.map do |cell|
+        @placement_cells.delete(cell)
+      end
+    end
+    coordinates_of_ship
   end
 
   def query_fire_upon

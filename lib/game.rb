@@ -31,7 +31,6 @@ class Game
     until player_cruiser.length == 3 && @player_board.valid_placement?(cruiser, player_cruiser)
       puts "Please select valid coordinates. Enter 3 coordinates separated by a space."
       player_cruiser = player.query_place_ship
-      # require "pry"; binding.pry
     end
     @player_board.place(cruiser, player_cruiser)
     puts "Please enter 2 coordinates"

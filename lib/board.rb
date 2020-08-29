@@ -38,7 +38,7 @@ class Board
       letters << coordinate[0].ord
       numbers << coordinate[1].to_i
     end
-    if letters.each_cons(2).all? { |x,y| x == y} && numbers.each_cons(2).all? { |x,y| x == y - 1 }
+    if letters.sort.each_cons(2).all? { |x,y| x == y} && numbers.sort.each_cons(2).all? { |x,y| x == y - 1 }
       true
     elsif numbers.sort.each_cons(2).all? { |x,y| x == y} && letters.sort.each_cons(2).all? { |x,y| x == y - 1 }
       true

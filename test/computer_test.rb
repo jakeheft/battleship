@@ -13,11 +13,19 @@ class ComputerTest < Minitest::Test
   end
 
   def test_computer_can_create_ship_coordinates
-    board = Board.new
     computer = Computer.new
     cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
-    assert_equal 3, computer.query_place_ship(3).length
-    assert_equal 2, computer.query_place_ship(2).length
+    assert_equal 3, computer.query_place_ship(cruiser.length).length
+    assert_equal 2, computer.query_place_ship(submarine.length).length
+  end
+
+  def test_computer_can_choose_fire_upon_coordinates
+    computer = Computer.new
+
+    assert_equal 16, computer.cells.length
+    computer.query_fire_upon
+    assert_equal 15, computer.cells.length
   end
 end

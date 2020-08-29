@@ -14,7 +14,14 @@ class GameTest < MiniTest::Test
     assert_instance_of Game, game
   end
 
+  def test_main_menu_asks_player_to_play
+    game = Game.new
+
+    assert ["p", "q"].include?(game.main_menu) # This will accept p or q as an answer
+  end
+
   def test_player_can_place_ships
+    skip
     game = Game.new
     # cruiser = Ship.new("Cruiser", 3)
     # board = Board.new

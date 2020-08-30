@@ -21,7 +21,6 @@ class TurnTest < MiniTest::Test
   end
 
   def test_it_can_print_computer_board
-    # game = Game.new
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -31,5 +30,16 @@ class TurnTest < MiniTest::Test
     expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
     assert_equal expected, turn.print_computer_board
   end
+
+  def test_it_can_print_player_board
+    player = Player.new("Timmy")
+    computer = Computer.new
+    player_board = Board.new
+    computer_board = Board.new
+    turn = Turn.new(player, computer, player_board, computer_board)
+
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, turn.print_player_board
+  end 
 
 end

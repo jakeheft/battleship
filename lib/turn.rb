@@ -12,13 +12,13 @@ class Turn
   end
 
   def print_computer_board
+    puts "=============COMPUTER BOARD============="
     @computer_board.render
   end
 
-  # def print_player_board
-  #   game.player_board.render
-  #   require "pry"; binding.pry
-  # end
-
+  def print_player_board
+    puts "==============PLAYER BOARD=============="
+    @player_board.render
+  end
 
 end

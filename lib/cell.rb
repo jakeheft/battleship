@@ -52,20 +52,4 @@ class Cell
       end
     end
   end
-
-  # def render(reveal = false)
-  #   if reveal == true && !empty? && !fired_upon?
-  #     "S"
-  #   elsif reveal == false
-  #     if @fired_status == false
-  #       "."
-  #     elsif @fired_status == true && @ship == nil
-  #       "M"
-  #     elsif @ship.sunk? == true
-  #       "X"
-  #     elsif @fired_status == true && @ship != nil
-  #       "H"
-  #     end
-  #   end
-  # end
 end

@@ -77,4 +77,18 @@ class Board
     "  1 2 3 4 ""\nA #{cra[0]} #{cra[1]} #{cra[2]} #{cra[3]} \nB #{cra[4]} #{cra[5]} #{cra[6]} #{cra[7]} \nC #{cra[8]} #{cra[9]} #{cra[10]} #{cra[11]} \nD #{cra[12]} #{cra[13]} #{cra[14]} #{cra[15]} \n"
   end
 
+  def has_lost?
+    # render.include?("X") >= 5
+
+    sunk_cells = @cells.find_all do |key, cell|
+      require "pry"; binding.pry
+      cell.render == "X"
+    end
+    if sunk_cells.length == 5
+      true
+    else
+      false
+    end
+  end
+
 end

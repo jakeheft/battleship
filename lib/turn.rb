@@ -65,9 +65,10 @@ class Turn
     @turn_count += 1
     puts print_computer_board
     puts print_player_board
-    computer_fires_upon_cell
     player_fires_upon_cell
+    computer_fires_upon_cell
     puts result_of_player_shot
+    puts result_of_computer_shot
   end
 
 end

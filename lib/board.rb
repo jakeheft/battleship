@@ -78,10 +78,7 @@ class Board
   end
 
   def has_lost?
-    # render.include?("X") >= 5
-
     sunk_cells = @cells.find_all do |key, cell|
-      require "pry"; binding.pry
       cell.render == "X"
     end
     if sunk_cells.length == 5

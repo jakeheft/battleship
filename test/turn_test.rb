@@ -11,7 +11,7 @@ require './lib/turn'
 class TurnTest < MiniTest::Test
 
   def test_it_exists
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -22,7 +22,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_it_can_print_computer_board
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -34,7 +34,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_it_can_print_player_board
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -46,7 +46,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_computer_can_fire_upon_cell
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -67,7 +67,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_player_can_fire_upon_cell
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -80,7 +80,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_can_display_result_of_player_shot
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
@@ -92,15 +92,17 @@ class TurnTest < MiniTest::Test
   end
 
   def test_run_turn
-    skip
+    # skip
     player = Player.new("Timmy")
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
+    computer_cruiser = Ship.new("Cruiser", 3)
+    computer_submarine = Ship.new("Submarine", 2)
     turn = Turn.new(player, computer, player_board, computer_board)
 
     assert_equal 0, turn.turn_count
-    turn.run_turn
+    turn.run_turn(computer_cruiser, computer_submarine)
     assert_equal 1, turn.turn_count
   end
 
@@ -122,7 +124,7 @@ class TurnTest < MiniTest::Test
     player_board.cells["A3"].fire_upon
     player_board.cells["B1"].fire_upon
     player_board.cells["B2"].fire_upon
-## trying to get has_lost? to come true, sunk_cells returning empty array as of now
+
     assert turn.player_board.has_lost?
   end
 

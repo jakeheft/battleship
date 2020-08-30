@@ -41,6 +41,11 @@ class Turn
     @computer_board.cells[@player_fire_location].fire_upon
   end
 
+  def game_over?(cruiser, submarine)
+    require "pry"; binding.pry
+    cruiser.sunk? && submarine.sunk?
+  end
+
   def result_of_player_shot
     if @computer_board.cells[@player_fire_location].render == "H"
       "Your shot on #{@player_fire_location} was a hit."
@@ -61,14 +66,18 @@ class Turn
     end
   end
 
-  def run_turn
+  def run_turn(computer_cruiser, computer_submarine)
     @turn_count += 1
     puts print_computer_board
     puts print_player_board
     player_fires_upon_cell
-    computer_fires_upon_cell
-    puts result_of_player_shot
-    puts result_of_computer_shot
+    if !game_over?(computer_cruiser, computer_submarine)
+      computer_fires_upon_cell
+      puts result_of_player_shot
+      puts result_of_computer_shot
+    else
+      puts result_of_player_shot
+    end
   end
 
 end

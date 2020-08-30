@@ -1,5 +1,5 @@
 class Turn
-  attr_reader :computer, :player, :player_board, :computer_board, :turn_count, :computer_fire_location, :player_fire_location
+  attr_reader :computer, :player, :player_board, :computer_board, :turn_count, :computer_fire_location, :player_fire_location, :player_choice
   def initialize(player, computer, player_board, computer_board)
     @player = player
     @computer = computer
@@ -8,16 +8,17 @@ class Turn
     @turn_count = 0
     @computer_fire_location = nil
     @player_fire_location = nil
+    @player_choice = ""
   end
 
   def print_computer_board
-    "=============COMPUTER BOARD============="
-    @computer_board.render
+    puts "\n=============COMPUTER BOARD============="
+    puts @computer_board.render
   end
 
   def print_player_board
-    "==============PLAYER BOARD=============="
-    @player_board.render
+    puts "\n==============PLAYER BOARD=============="
+    puts @player_board.render(true)
   end
 
   def computer_fires_upon_cell
@@ -26,13 +27,16 @@ class Turn
   end
 
   def player_fires_upon_cell
-    print "Enter the coorindate for your shot:\n>  "
+    print "\nEnter the coorindate for your shot:\n>  "
     @player_fire_location = @player.query_fire_upon
-    player_choice = ""
-    until @computer_board.validate_coordinate?(@player_fire_location) && (@computer_board.cells[@player_fire_location].fired_upon? == false) || (player_choice == 'yes' || player_choice == 'y')
+    until @computer_board.validate_coordinate?(@player_fire_location) && (@computer_board.cells[@player_fire_location].fired_upon? == false) || (@player_choice == "yes" || @player_choice == "y")
       if @computer_board.cells[@player_fire_location].render == "H" || @computer_board.cells[@player_fire_location].render == "M" || @computer_board.cells[@player_fire_location].render == "X"
         puts "You have already fired upon this cell; are you sure you want to proceed with this selection? y/n"
-        player_choice = gets.chomp.downcase
+        @player_choice = gets.chomp.downcase
+        if @player_choice == "n" || @player_choice == "no"
+          puts "Enter the coorindate for your shot:\n>  "
+          @player_fire_location = @player.query_fire_upon
+        end
       else
         puts "Please enter a valid coordinate:\n>  "
         @player_fire_location = @player.query_fire_upon
@@ -42,17 +46,18 @@ class Turn
   end
 
   def game_over?(cruiser, submarine)
-    require "pry"; binding.pry
     cruiser.sunk? && submarine.sunk?
   end
 
   def result_of_player_shot
-    if @computer_board.cells[@player_fire_location].render == "H"
-      "Your shot on #{@player_fire_location} was a hit."
+    if @player_choice == "y" || @player_choice == "yes"
+      "\nYou already shot on #{@player_fire_location}. Smooth move."
+    elsif @computer_board.cells[@player_fire_location].render == "H"
+      "\nYour shot on #{@player_fire_location} was a hit."
     elsif @computer_board.cells[@player_fire_location].render == "M"
-      "Your shot on #{@player_fire_location} was a miss."
+      "\nYour shot on #{@player_fire_location} was a miss."
     elsif @computer_board.cells[@player_fire_location].render == "X"
-      "Your shot on #{@player_fire_location} was a hit and you sunk a ship."
+      "\nYour shot on #{@player_fire_location} was a hit and you sunk a ship."
     end
   end
 
@@ -68,8 +73,8 @@ class Turn
 
   def run_turn(computer_cruiser, computer_submarine)
     @turn_count += 1
-    puts print_computer_board
-    puts print_player_board
+    print_computer_board
+    print_player_board
     player_fires_upon_cell
     if !game_over?(computer_cruiser, computer_submarine)
       computer_fires_upon_cell

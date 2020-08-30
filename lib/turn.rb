@@ -1,7 +1,3 @@
-require './lib/game'
-require './lib/computer'
-require './lib/board'
-
 class Turn
   attr_reader :computer, :player
   def initialize(player, computer, player_board, computer_board)
@@ -19,6 +15,11 @@ class Turn
   def print_player_board
     puts "==============PLAYER BOARD=============="
     @player_board.render
+  end
+
+  def computer_fires_upon_cell
+    fire_location = @computer.query_fire_upon
+    @player_board.cells[fire_location].fire_upon
   end
 
 end

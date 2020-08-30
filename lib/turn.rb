@@ -11,13 +11,13 @@ class Turn
   end
 
   def print_computer_board
-    "=============COMPUTER BOARD============="
-    @computer_board.render
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
   end
 
   def print_player_board
-    "==============PLAYER BOARD=============="
-    @player_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
   end
 
   def computer_fires_upon_cell
@@ -42,7 +42,6 @@ class Turn
   end
 
   def game_over?(cruiser, submarine)
-    require "pry"; binding.pry
     cruiser.sunk? && submarine.sunk?
   end
 
@@ -68,8 +67,8 @@ class Turn
 
   def run_turn(computer_cruiser, computer_submarine)
     @turn_count += 1
-    puts print_computer_board
-    puts print_player_board
+    print_computer_board
+    print_player_board
     player_fires_upon_cell
     if !game_over?(computer_cruiser, computer_submarine)
       computer_fires_upon_cell

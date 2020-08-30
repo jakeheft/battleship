@@ -31,7 +31,7 @@ class Cell
     if reveal == true
       if !empty? && !fired_upon?
         "S"
-      elsif @ship.sunk?
+      elsif !empty? && @ship.sunk?
         "X"
       elsif !empty? && fired_upon?
         "H"
@@ -45,7 +45,7 @@ class Cell
         "."
       elsif @fired_status == true && @ship == nil
         "M"
-      elsif @ship.sunk?
+      elsif @ship != nil && @ship.sunk?
         "X"
       elsif @fired_status == true && @ship != nil
         "H"

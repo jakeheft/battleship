@@ -66,6 +66,7 @@ class Board
 
   def render(reveal = false)
     if reveal == false
+      #cra = "Coordinates Render Array"
       cra = cells.map do |key, value|
         value.render
       end

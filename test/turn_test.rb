@@ -62,4 +62,16 @@ class TurnTest < MiniTest::Test
     assert actual2
   end
 
+  def test_player_can_fire_upon_cell
+    player = Player.new("Timmy")
+    computer = Computer.new
+    player_board = Board.new
+    computer_board = Board.new
+    turn = Turn.new(player, computer, player_board, computer_board)
+
+    assert_equal false, computer_board.cells["A1"].fired_status
+    turn.player_fires_upon_cell
+    assert computer_board.cells["A1"].fired_status
+  end
+
 end

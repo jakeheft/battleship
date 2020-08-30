@@ -22,7 +22,7 @@ class GameTest < MiniTest::Test
   end
 
   def test_computer_places_two_ships
-    skip
+    skip ## Check if this test is necessary
     game = Game.new
 
     assert_equal 16, game.computer.placement_cells.length
@@ -41,6 +41,6 @@ class GameTest < MiniTest::Test
   end
 
   def test_can_render_board_after_ships_are_placed
-
+    skip ## Check if this test is necessary
   end
 end

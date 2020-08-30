@@ -17,7 +17,6 @@ class Game
     answer = gets.chomp.downcase
   end
 
-#run coordinates = gets.chomp in game start method, then coordinates are carried into player.place_ship method via argument
   def computer_place_ships
     computer_cruiser = computer.query_place_ship(cruiser.length)
     @computer_board.place(cruiser, computer_cruiser)
@@ -41,7 +40,7 @@ class Game
     end
     @player_board.place(cruiser, player_cruiser)
     puts @player_board.render(true)
-    print "Enter the squares for the Cruiser (3 spaces):\n>  "
+    print "Enter the squares for the Submarine (2 spaces):\n>  "
     player_submarine = player.query_place_ship
     until player_submarine.length == 2 && @player_board.valid_placement?(submarine, player_submarine)
       puts "Please select valid coordinates. Enter 2 coordinates separated by a space that are empty."

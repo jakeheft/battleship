@@ -38,7 +38,7 @@ class Board
       letters << coordinate[0].ord
       numbers << coordinate[1].to_i
     end
-    if letters.each_cons(2).all? { |x,y| x == y} && numbers.each_cons(2).all? { |x,y| x == y - 1 }
+    if letters.sort.each_cons(2).all? { |x,y| x == y} && numbers.sort.each_cons(2).all? { |x,y| x == y - 1 }
       true
     elsif numbers.sort.each_cons(2).all? { |x,y| x == y} && letters.sort.each_cons(2).all? { |x,y| x == y - 1 }
       true
@@ -74,7 +74,7 @@ class Board
         value.render(true)
       end
     end
-    " 1 2 3 4 ""\nA #{cra[0]} #{cra[1]} #{cra[2]} #{cra[3]} \nB #{cra[4]} #{cra[5]} #{cra[6]} #{cra[7]} \nC #{cra[8]} #{cra[9]} #{cra[10]} #{cra[11]} \nD #{cra[12]} #{cra[13]} #{cra[14]} #{cra[15]} \n"
+    "  1 2 3 4 ""\nA #{cra[0]} #{cra[1]} #{cra[2]} #{cra[3]} \nB #{cra[4]} #{cra[5]} #{cra[6]} #{cra[7]} \nC #{cra[8]} #{cra[9]} #{cra[10]} #{cra[11]} \nD #{cra[12]} #{cra[13]} #{cra[14]} #{cra[15]} \n"
   end
 
 end

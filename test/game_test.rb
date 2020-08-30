@@ -5,6 +5,7 @@ require './lib/cell'
 require './lib/board'
 require './lib/game'
 require './lib/player'
+require './lib/computer'
 
 class GameTest < MiniTest::Test
 
@@ -14,14 +15,32 @@ class GameTest < MiniTest::Test
     assert_instance_of Game, game
   end
 
+  def test_main_menu_asks_player_to_play
+    game = Game.new
+
+    assert ["p", "q"].include?(game.main_menu) # This will accept p or q as an answer
+  end
+
+  def test_computer_places_two_ships
+    skip ## Check if this test is necessary
+    game = Game.new
+
+    assert_equal 16, game.computer.placement_cells.length
+    game.computer_place_ships
+    # assert_equal 13, game.computer.placement_cells.length
+    assert_equal 2, game.computer.coordinates_of_ship.length
+
+  end
+
   def test_player_can_place_ships
     game = Game.new
-    # cruiser = Ship.new("Cruiser", 3)
-    # board = Board.new
 
-    game.place_ship(game.cruiser, "A1 A2 A3")
+    assert_equal 0, game.player.ship_placement.length
+    game.player_place_ships
+    assert_equal 2, game.player.ship_placement.length
+  end
 
-    assert_equal false, game.board.coordinates_empty?(["A1", "A2", "A3"])
-    assert_equal game.cruiser, game.board.cells["A1"].ship
+  def test_can_render_board_after_ships_are_placed
+    skip ## Check if this test is necessary
   end
 end

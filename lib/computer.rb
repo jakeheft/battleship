@@ -1,8 +1,9 @@
 class Computer
-  attr_reader :cells
-  
+  attr_reader :placement_cells, :firing_cells
+
   def initialize
-    @cells = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    @placement_cells = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    @firing_cells = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
   end
 
   def valid_placement?(ship_length, randomizer, starting_cell)
@@ -20,9 +21,9 @@ class Computer
 
   def query_place_ship(ship_length)
     randomizer = ["vertical", "horizontal"].sample
-    starting_cell = @cells.sample
+    starting_cell = @placement_cells.sample
     until valid_placement?(ship_length, randomizer, starting_cell)
-      starting_cell = @cells.sample
+      starting_cell = @placement_cells.sample
     end
     coordinates_of_ship = [starting_cell]
     if randomizer == "vertical"
@@ -38,11 +39,16 @@ class Computer
         starting_cell = next_cell
       end
     end
-  coordinates_of_ship
+    if ship_length == 3
+      coordinates_of_ship.map do |cell|
+        @placement_cells.delete(cell)
+      end
+    end
+    coordinates_of_ship
   end
 
   def query_fire_upon
-    @cells = @cells.shuffle
-    @cells.shift
+    @firing_cells = @firing_cells.shuffle
+    @firing_cells.shift
   end
 end

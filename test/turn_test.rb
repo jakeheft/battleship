@@ -74,4 +74,27 @@ class TurnTest < MiniTest::Test
     assert computer_board.cells["A1"].fired_status
   end
 
+  def test_can_display_result_of_player_shot
+    player = Player.new("Timmy")
+    computer = Computer.new
+    player_board = Board.new
+    computer_board = Board.new
+    turn = Turn.new(player, computer, player_board, computer_board)
+
+    turn.player_fires_upon_cell
+    assert_equal "Your shot on A1 was a miss.", turn.result_of_player_shot
+  end
+
+  def test_run_turn
+    player = Player.new("Timmy")
+    computer = Computer.new
+    player_board = Board.new
+    computer_board = Board.new
+    turn = Turn.new(player, computer, player_board, computer_board)
+
+    assert_equal 0, turn.turn_count
+    turn.run_turn
+    assert_equal 1, turn.turn_count
+  end
+
 end

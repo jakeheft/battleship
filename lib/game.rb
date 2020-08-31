@@ -1,5 +1,3 @@
-require './lib/turn'
-
 class Game
   attr_reader :answer, :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
 
@@ -24,13 +22,17 @@ class Game
     elsif @answer == "q"
       puts "Come back and play sometime!"
     else
-      until @answer == "p" || @answer == "q"## || 3.times
+      count = 0
+      until @answer == "p" || @answer == "q" || count == 3
         puts "Please enter 'p' to start a game or 'q' to quit."
         @answer = gets.chomp.downcase
+        count += 1
         if @answer == "p"
           run_game
         elsif @answer == "q"
           puts "Come back and play sometime!"
+        elsif count == 2
+          print "Last chance! "
         end
       end
     end

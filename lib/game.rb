@@ -1,9 +1,8 @@
-require './lib/turn'
-
 class Game
-  attr_reader :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
+  attr_reader :answer, :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
 
   def initialize
+    @answer = ""
     @player = Player.new("Timmy")
     @computer = Computer.new
     @player_board = Board.new
@@ -14,11 +13,29 @@ class Game
     @computer_submarine = Ship.new("Submarine", 2)
   end
 
-  # This will be run via the runner and it will check whether "p" or "q" is input. If neither is input, it will give 3 chances before exiting the game. If "p" is input, it will run game.start
   def main_menu
     puts "Welcome to BATTLESHIP"
-    puts "Enter p to play. Enter q to quit."
-    answer = gets.chomp.downcase
+    puts "Enter 'p' to play. Enter 'q' to quit."
+    @answer = gets.chomp.downcase
+    if @answer == "p"
+      run_game
+    elsif @answer == "q"
+      puts "Come back and play sometime!"
+    else
+      count = 0
+      until @answer == "p" || @answer == "q" || count == 3
+        puts "Please enter 'p' to start a game or 'q' to quit."
+        @answer = gets.chomp.downcase
+        count += 1
+        if @answer == "p"
+          run_game
+        elsif @answer == "q"
+          puts "Come back and play sometime!"
+        elsif count == 2
+          print "Last chance! "
+        end
+      end
+    end
   end
 
   def computer_place_ships
@@ -70,7 +87,7 @@ class Game
     Turn.new(player, computer, player_board, computer_board)
   end
 
-  def start
+  def run_game
     computer_place_ships
     player_place_ships
     until game_over?

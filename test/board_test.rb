@@ -17,7 +17,6 @@ class BoardTest < MiniTest::Test
     board.cells
 
     assert_equal 16, board.cells.count
-    assert_instance_of Cell, board.cells["A1"]
   end
 
   def test_if_coordinate_is_on_board_or_not
@@ -39,26 +38,22 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.validate_coordinates?(["D1", "E1"])
   end
 
-  def test_number_of_coordinate_in_array_equals_length_of_ship
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-
-    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
-    assert_equal false, board.valid_placement?(submarine, ["A2", "A3", "A4"])
-    assert board.valid_placement?(cruiser, ["B1", "C1", "D1"])
-  end
-
   def test_coordinates_are_consecutive
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
     assert board.consecutive_coordinates?(["A1", "A2", "A3"])
-    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2", "A4"])
-    assert_equal false, board.valid_placement?(submarine, ["A1", "C1"])
-    assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
-    assert board.valid_placement?(submarine, ["C1", "B1"])
+    assert_equal false, board.consecutive_coordinates?(["A1", "A2", "A4"])
+  end
+
+  def test_can_check_if_coordinates_are_empty
+    board = Board.new
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["B1"]
+    cell_3 = board.cells["C1"]
+
+    assert board.coordinates_empty?(["A1", "B1", "C1"])
   end
 
   def test_coordinates_cant_be_diagonal
@@ -80,19 +75,29 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(cruiser, ["A3", "A4", "A5"])
   end
 
-  def test_a_ship_contains_multiple_cells
+  def test_can_place_ships
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-
-    board.place(cruiser, ["A1", "A2", "A3"])
-
     cell_1 = board.cells["A1"]
     cell_2 = board.cells["A2"]
     cell_3 = board.cells["A3"]
 
-    cell_1.ship
-    cell_2.ship
-    cell_3.ship
+    assert_nil cell_1.ship
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal cruiser, cell_1.ship
+  end
+
+  def test_a_ship_contains_multiple_cells
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+
     assert cell_3.ship == cell_2.ship
     assert_equal cruiser, cell_1.ship
   end
@@ -100,24 +105,45 @@ class BoardTest < MiniTest::Test
   def test_ships_cant_overlap
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
     board.place(cruiser, ["A1", "A2", "A3"])
-
-    submarine = Ship.new("Submarine", 2)
 
     assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
   end
 
-  def test_true_render_will_map_ships
+  def test_boards_can_render
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 
-    expected1 = " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
-    expected2 = " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+    expected1 = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    expected2 = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
 
     board.place(cruiser, ["A1", "A2", "A3"])
+
     assert_equal expected1, board.render
     assert_equal expected2, board.render(true)
+  end
+
+  def test_has_lost_renders_as_X
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+    cell_4 = board.cells["B3"]
+    cell_5 = board.cells["B4"]
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+    board.place(submarine, ["B3", "B4"])
+    cell_1.fire_upon
+    cell_2.fire_upon
+    cell_3.fire_upon
+    cell_4.fire_upon
+    cell_5.fire_upon
+
+    assert board.has_lost?
   end
 
 end

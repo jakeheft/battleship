@@ -16,8 +16,11 @@ class PlayerTest < Minitest::Test
   def test_player_can_be_asked_for_ship_placement
     player = Player.new
 
+    assert player.ship_placement.empty?
+
+    player.stubs(:user_input).returns("A1")
     player.query_place_ship
-    # We entered "a1" when queried
+
     assert_equal false, player.ship_placement.empty?
   end
 
@@ -25,7 +28,8 @@ class PlayerTest < Minitest::Test
     player = Player.new
     board = Board.new
 
-    # We entered "a1" when queried
+    player.stubs(:gets).returns("A1")
+    
     assert_equal "A1", player.query_fire_upon
   end
 

@@ -3,7 +3,7 @@ class Game
 
   def initialize
     @answer = ""
-    @player = Player.new("Timmy")
+    @player = Player.new
     @computer = Computer.new
     @player_board = Board.new
     @computer_board = Board.new

@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
@@ -11,8 +12,7 @@ require './lib/turn'
 class TurnTest < MiniTest::Test
 
   def test_it_exists
-    # skip
-    player = Player.new("Timmy")
+    player = Player.new
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
@@ -22,8 +22,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_it_can_print_computer_board
-    # skip
-    player = Player.new("Timmy")
+    player = Player.new
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
@@ -34,8 +33,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_it_can_print_player_board
-    # skip
-    player = Player.new("Timmy")
+    player = Player.new
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
@@ -46,8 +44,7 @@ class TurnTest < MiniTest::Test
   end
 
   def test_computer_can_fire_upon_cell
-    # skip
-    player = Player.new("Timmy")
+    player = Player.new
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
@@ -66,48 +63,8 @@ class TurnTest < MiniTest::Test
     assert actual2
   end
 
-  def test_player_can_fire_upon_cell
-    # skip
-    player = Player.new("Timmy")
-    computer = Computer.new
-    player_board = Board.new
-    computer_board = Board.new
-    turn = Turn.new(player, computer, player_board, computer_board)
-
-    assert_equal false, computer_board.cells["A1"].fired_status
-    turn.player_fires_upon_cell
-    assert computer_board.cells["A1"].fired_status
-  end
-
-  def test_can_display_result_of_player_shot
-    # skip
-    player = Player.new("Timmy")
-    computer = Computer.new
-    player_board = Board.new
-    computer_board = Board.new
-    turn = Turn.new(player, computer, player_board, computer_board)
-
-    turn.player_fires_upon_cell
-    assert_equal "Your shot on A1 was a miss.", turn.result_of_player_shot
-  end
-
-  def test_run_turn
-    # skip
-    player = Player.new("Timmy")
-    computer = Computer.new
-    player_board = Board.new
-    computer_board = Board.new
-    computer_cruiser = Ship.new("Cruiser", 3)
-    computer_submarine = Ship.new("Submarine", 2)
-    turn = Turn.new(player, computer, player_board, computer_board)
-
-    assert_equal 0, turn.turn_count
-    turn.run_turn(computer_cruiser, computer_submarine)
-    assert_equal 1, turn.turn_count
-  end
-
   def test_a_turn_will_end_if_all_ships_sunk
-    player = Player.new("Timmy")
+    player = Player.new
     computer = Computer.new
     player_board = Board.new
     computer_board = Board.new
@@ -126,6 +83,7 @@ class TurnTest < MiniTest::Test
     player_board.cells["B2"].fire_upon
 
     assert turn.player_board.has_lost?
+    assert turn.game_over?(cruiser, submarine)
   end
 
 end

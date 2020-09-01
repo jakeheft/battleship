@@ -13,12 +13,12 @@ class Turn
 
   def print_computer_board
     puts "\n=============COMPUTER BOARD============="
-    puts @computer_board.render
+    @computer_board.render
   end
 
   def print_player_board
     puts "\n==============PLAYER BOARD=============="
-    puts @player_board.render(true)
+    @player_board.render(true)
   end
 
   def computer_fires_upon_cell
@@ -73,8 +73,8 @@ class Turn
 
   def run_turn(computer_cruiser, computer_submarine)
     @turn_count += 1
-    print_computer_board
-    print_player_board
+    puts print_computer_board
+    puts print_player_board
     player_fires_upon_cell
     if !game_over?(computer_cruiser, computer_submarine)
       computer_fires_upon_cell

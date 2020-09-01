@@ -1,10 +1,7 @@
-require './lib/board'
-
 class Player
-  attr_reader :name, :ship_placement
+  attr_reader :ship_placement
 
-  def initialize(name)
-    @name = name
+  def initialize
     @ship_placement = []
   end
 

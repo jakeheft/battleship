@@ -1,7 +1,7 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "./lib/cell"
-require "./lib/ship"
+require 'minitest/autorun'
+require 'minitest/pride'
+require './lib/cell'
+require './lib/ship'
 
 class CellTest < Minitest::Test
   def test_it_exists

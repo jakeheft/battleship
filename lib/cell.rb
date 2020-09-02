@@ -4,8 +4,7 @@ class Cell
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = nil
-    @fired_status = false  ## should @fired_upon be cell status? If so, write an if
-      ## statement for fired_upon? method
+    @fired_status = false
   end
 
   def empty?
@@ -41,13 +40,13 @@ class Cell
         "."
       end
     elsif reveal == false
-      if @fired_status == false
+      if !fired_upon?
         "."
-      elsif @fired_status == true && @ship == nil
+      elsif empty? && fired_upon?
         "M"
-      elsif @ship != nil && @ship.sunk?
+      elsif !empty? && @ship.sunk?
         "X"
-      elsif @fired_status == true && @ship != nil
+      elsif !empty? && fired_upon?
         "H"
       end
     end

@@ -1,9 +1,8 @@
 class Game
-  attr_reader :answer, :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
+  attr_reader :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
 
   def initialize
-    @answer = ""
-    @player = Player.new("Timmy")
+    @player = Player.new
     @computer = Computer.new
     @player_board = Board.new
     @computer_board = Board.new
@@ -16,20 +15,20 @@ class Game
   def main_menu
     puts "Welcome to BATTLESHIP"
     puts "Enter 'p' to play. Enter 'q' to quit."
-    @answer = gets.chomp.downcase
-    if @answer == "p"
+    answer = gets.chomp.downcase
+    if answer == "p"
       run_game
-    elsif @answer == "q"
+    elsif answer == "q"
       puts "Come back and play sometime!"
     else
       count = 0
-      until @answer == "p" || @answer == "q" || count == 3
+      until answer == "p" || answer == "q" || count == 3
         puts "Please enter 'p' to start a game or 'q' to quit."
-        @answer = gets.chomp.downcase
+        answer = gets.chomp.downcase
         count += 1
-        if @answer == "p"
+        if answer == "p"
           run_game
-        elsif @answer == "q"
+        elsif answer == "q"
           puts "Come back and play sometime!"
         elsif count == 2
           print "Last chance! "
@@ -38,48 +37,41 @@ class Game
     end
   end
 
-  def computer_place_ships
-    computer_cruiser_placement = computer.query_place_ship(@computer_cruiser.length)
-    @computer_board.place(@computer_cruiser, computer_cruiser_placement)
-    computer_submarine_placement = computer.query_place_ship(@computer_submarine.length)
-    until @computer_board.valid_placement?(@computer_submarine, computer_submarine_placement)
-      computer_submarine_placement = computer.query_place_ship(@computer_submarine.length)
+  def computer_place_ship(ship)
+    computer_ship_placement = computer.query_place_ship(ship.length)
+    until @computer_board.valid_placement?(ship, computer_ship_placement)
+      computer_ship_placement = computer.query_place_ship(ship.length)
     end
-    @computer_board.place(@computer_submarine, computer_submarine_placement)
+    @computer_board.place(ship, computer_ship_placement)
   end
 
-  def player_place_ships
+  def create_player_board_intro
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render
-    print"Enter the squares for the Cruiser (3 spaces):\n>  "
-    player_cruiser_placement = player.query_place_ship
-    until player_cruiser_placement.length == 3 && @player_board.valid_placement?(@player_cruiser, player_cruiser_placement)
-      puts "Please select valid coordinates. Enter 3 coordinates separated by a space."
-      player_cruiser_placement = player.query_place_ship
-    end
-    @player_board.place(@player_cruiser, player_cruiser_placement)
-    puts @player_board.render(true)
-    print "Enter the squares for the Submarine (2 spaces):\n>  "
-    player_submarine_placement = player.query_place_ship
-    until player_submarine_placement.length == 2 && @player_board.valid_placement?(@player_submarine, player_submarine_placement)
-      puts "Please select valid coordinates. Enter 2 coordinates separated by a space that are empty."
-      player_submarine_placement = player.query_place_ship
-    end
-    @player_board.place(@player_submarine, player_submarine_placement)
-    puts @player_board.render(true)
   end
 
-  def game_over?
-    @player_cruiser.sunk? && @player_submarine.sunk? || @computer_cruiser.sunk? && @computer_submarine.sunk?
+  def player_place_ship(ship)
+    print"Enter the squares for the #{ship.name} (#{ship.length} spaces):\n>  "
+    player_ship_placement = player.query_place_ship
+    until player_ship_placement.length == ship.length && @player_board.valid_placement?(ship, player_ship_placement)
+      puts "Please select valid coordinates. Enter #{ship.length} coordinates separated by a space."
+      player_ship_placement = player.query_place_ship
+    end
+    @player_board.place(ship, player_ship_placement)
+    puts @player_board.render(true)
   end
 
   def end_game
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
-      "You win!"
+      print "You win!\n"
+      true
     elsif @player_cruiser.sunk? && @player_submarine.sunk?
-      "I win!"
+      print "I win!\n"
+      true
+    else
+      false
     end
   end
 
@@ -88,13 +80,16 @@ class Game
   end
 
   def run_game
-    computer_place_ships
-    player_place_ships
-    until game_over?
+    computer_place_ship(@computer_cruiser)
+    computer_place_ship(@computer_submarine)
+    create_player_board_intro
+    player_place_ship(@player_cruiser)
+    player_place_ship(@player_submarine)
+    until end_game
       new_turn = turn()
       new_turn.run_turn(@computer_cruiser, @computer_submarine)
     end
-    puts end_game
+    main_menu
   end
 
 

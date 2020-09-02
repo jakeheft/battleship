@@ -1,11 +1,10 @@
 class Turn
-  attr_reader :computer, :player, :player_board, :computer_board, :turn_count, :computer_fire_location, :player_fire_location, :player_choice
+  attr_reader :computer, :player, :player_board, :computer_board, :computer_fire_location, :player_fire_location, :player_choice
   def initialize(player, computer, player_board, computer_board)
     @player = player
     @computer = computer
     @player_board = player_board
     @computer_board = computer_board
-    @turn_count = 0
     @computer_fire_location = nil
     @player_fire_location = nil
     @player_choice = ""
@@ -13,12 +12,12 @@ class Turn
 
   def print_computer_board
     puts "\n=============COMPUTER BOARD============="
-    puts @computer_board.render
+    @computer_board.render
   end
 
   def print_player_board
     puts "\n==============PLAYER BOARD=============="
-    puts @player_board.render(true)
+    @player_board.render(true)
   end
 
   def computer_fires_upon_cell
@@ -26,21 +25,36 @@ class Turn
     @player_board.cells[@computer_fire_location].fire_upon
   end
 
+  def computer_cell_status
+    @computer_board.cells[@player_fire_location].render
+  end
+
+  def cell_has_been_hit?
+    computer_cell_status == "H" || computer_cell_status == "M" || computer_cell_status == "X"
+  end
+
+  def ask_for_valid_coordinate
+    print "Please enter a valid coordinate:\n>  "
+    @player_fire_location = @player.query_fire_upon
+  end
+
   def player_fires_upon_cell
     print "\nEnter the coorindate for your shot:\n>  "
     @player_fire_location = @player.query_fire_upon
-    until @computer_board.validate_coordinate?(@player_fire_location) && (@computer_board.cells[@player_fire_location].fired_upon? == false) || (@player_choice == "yes" || @player_choice == "y")
-      if @computer_board.cells[@player_fire_location].render == "H" || @computer_board.cells[@player_fire_location].render == "M" || @computer_board.cells[@player_fire_location].render == "X"
+    until @computer_board.validate_coordinate?(@player_fire_location) && !@computer_board.cells[@player_fire_location].fired_upon? || (@player_choice == "yes" || @player_choice == "y")
+
+      if !@computer_board.validate_coordinate?(@player_fire_location)
+        ask_for_valid_coordinate
+      elsif cell_has_been_hit?
         puts "You have already fired upon this cell; are you sure you want to proceed with this selection? y/n"
         @player_choice = gets.chomp.downcase
         if @player_choice == "n" || @player_choice == "no"
-          puts "Enter the coorindate for your shot:\n>  "
-          @player_fire_location = @player.query_fire_upon
+          ask_for_valid_coordinate
         end
       else
-        puts "Please enter a valid coordinate:\n>  "
-        @player_fire_location = @player.query_fire_upon
+        ask_for_valid_coordinate
       end
+
     end
     @computer_board.cells[@player_fire_location].fire_upon
   end
@@ -49,32 +63,36 @@ class Turn
     cruiser.sunk? && submarine.sunk?
   end
 
+
   def result_of_player_shot
     if @player_choice == "y" || @player_choice == "yes"
       "\nYou already shot on #{@player_fire_location}. Smooth move."
-    elsif @computer_board.cells[@player_fire_location].render == "H"
+  elsif computer_cell_status == "H"
       "\nYour shot on #{@player_fire_location} was a hit."
-    elsif @computer_board.cells[@player_fire_location].render == "M"
+  elsif computer_cell_status == "M"
       "\nYour shot on #{@player_fire_location} was a miss."
-    elsif @computer_board.cells[@player_fire_location].render == "X"
+  elsif computer_cell_status == "X"
       "\nYour shot on #{@player_fire_location} was a hit and you sunk a ship."
     end
   end
 
+  def player_cell_status
+    @player_board.cells[@computer_fire_location].render
+  end
+
   def result_of_computer_shot
-    if @player_board.cells[@computer_fire_location].render == "H"
+    if player_cell_status == "H"
       "My shot on #{@computer_fire_location} was a hit."
-    elsif @player_board.cells[@computer_fire_location].render == "M"
+    elsif player_cell_status == "M"
       "My shot on #{@computer_fire_location} was a miss."
-    elsif @player_board.cells[@computer_fire_location].render == "X"
+    elsif player_cell_status == "X"
       "My shot on #{@computer_fire_location} was a hit and I sunk a ship."
     end
   end
 
   def run_turn(computer_cruiser, computer_submarine)
-    @turn_count += 1
-    print_computer_board
-    print_player_board
+    puts print_computer_board
+    puts print_player_board
     player_fires_upon_cell
     if !game_over?(computer_cruiser, computer_submarine)
       computer_fires_upon_cell

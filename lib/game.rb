@@ -89,7 +89,7 @@ class Game
       new_turn = turn()
       new_turn.run_turn(@computer_cruiser, @computer_submarine)
     end
-    main_menu
+    Game.new.main_menu
   end
 
 

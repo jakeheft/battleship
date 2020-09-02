@@ -73,4 +73,18 @@ class Computer
     @firing_cells = @firing_cells.shuffle
     @firing_cells.shift
   end
+
+  def query_consecutive_cell(cell)
+    cell_letter = cell[0]
+    cell_number = cell[1].to_i
+    consecutive_cell_array = []
+    consecutive_cell_array << (cell_letter + (cell_number + 1).to_s)
+    consecutive_cell_array << (cell_letter + (cell_number - 1).to_s)
+    consecutive_cell_array << (cell_letter.ord + 1).chr + cell_number.to_s
+    consecutive_cell_array << (cell_letter.ord - 1).chr + cell_number.to_s
+    valid_cells = consecutive_cell_array & @firing_cells
+    firing_cell = valid_cells.sample
+    @firing_cells.delete(firing_cell)
+    firing_cell
+  end
 end

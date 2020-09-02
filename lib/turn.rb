@@ -1,5 +1,5 @@
 class Turn
-  attr_reader :computer, :player, :player_board, :computer_board, :turn_count, :computer_fire_location, :player_fire_location, :player_choice
+  attr_reader :computer, :player, :player_board, :computer_board, :computer_fire_location, :player_fire_location, :player_choice
   def initialize(player, computer, player_board, computer_board)
     @player = player
     @computer = computer

@@ -1,4 +1,3 @@
-# require '../runner'
 class Game
   attr_reader :player, :computer, :player_board, :computer_board, :player_cruiser, :player_submarine, :computer_cruiser, :computer_submarine
 
@@ -91,7 +90,6 @@ class Game
       new_turn.run_turn(@computer_cruiser, @computer_submarine)
     end
     Game.new.main_menu
-    # main_menu
   end
 
 

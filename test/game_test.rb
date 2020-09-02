@@ -27,7 +27,7 @@ class GameTest < MiniTest::Test
     game.player_board.cells["B1"].fire_upon
     game.player_board.cells["B2"].fire_upon
 
-    assert game.game_over?
+    assert game.end_game
   end
 
   def test_a_game_runs_through_main_menu

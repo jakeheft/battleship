@@ -20,9 +20,25 @@ class Turn
     @player_board.render(true)
   end
 
+  def computer_find_hit_cells
+    @player_board.cells.select do |key, value|
+      value.render == "H"
+    end
+  end
+
   def computer_fires_upon_cell
-    @computer_fire_location = @computer.query_fire_upon
-    @player_board.cells[@computer_fire_location].fire_upon
+    if computer_find_hit_cells.count >= 1
+      @computer_fire_location = @computer.query_consecutive_cell(computer_find_hit_cells.keys)
+      if @player_board.cells[@computer_fire_location].nil?
+        @computer_fire_location = @computer.query_fire_upon
+        @player_board.cells[@computer_fire_location].fire_upon
+      else
+        @player_board.cells[@computer_fire_location].fire_upon
+      end
+    else
+      @computer_fire_location = @computer.query_fire_upon
+      @player_board.cells[@computer_fire_location].fire_upon
+    end
   end
 
   def computer_cell_status

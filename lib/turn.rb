@@ -42,7 +42,6 @@ class Turn
     print "\nEnter the coorindate for your shot:\n>  "
     @player_fire_location = @player.query_fire_upon
     until @computer_board.validate_coordinate?(@player_fire_location) && !@computer_board.cells[@player_fire_location].fired_upon? || (@player_choice == "yes" || @player_choice == "y")
-
       if !@computer_board.validate_coordinate?(@player_fire_location)
         ask_for_valid_coordinate
       elsif cell_has_been_hit?
@@ -54,15 +53,16 @@ class Turn
       else
         ask_for_valid_coordinate
       end
-
     end
-    @computer_board.cells[@player_fire_location].fire_upon
+    if @player_choice == 'yes' || @player_choice == 'y'
+    else
+      @computer_board.cells[@player_fire_location].fire_upon
+    end
   end
 
   def game_over?(cruiser, submarine)
     cruiser.sunk? && submarine.sunk?
   end
-
 
   def result_of_player_shot
     if @player_choice == "y" || @player_choice == "yes"
